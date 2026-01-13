@@ -13,8 +13,8 @@ test('Verify Monitoring Suite is Properly Configured', async () => {
     expect(notifier.sendAlert).toBeDefined();
 
     // 2. Check that GitHub workflows exist
-    const dailyCheckPath = path.join(__dirname, '../.github/workflows/daily-check.yml');
-    const healthCheckPath = path.join(__dirname, '../.github/workflows/daily-health-check.yml');
+    const dailyCheckPath = path.join(__dirname, '../../workflow-automation/.github/workflows/daily-check.yml');
+    const healthCheckPath = path.join(__dirname, '../../daily-health-check/.github/workflows/daily-health-check.yml');
 
     expect(fs.existsSync(dailyCheckPath)).toBe(true);
     expect(fs.existsSync(healthCheckPath)).toBe(true);
@@ -31,7 +31,7 @@ test('Verify Monitoring Suite is Properly Configured', async () => {
     expect(process.env.EMAIL_PASS || process.env.EMAIL_USER || true).toBeDefined();
 
     // 5. Check that BackendChecks exists
-    const backendPath = path.join(__dirname, '../.github/workflows/services/BackendChecks.js');
+    const backendPath = path.join(__dirname, '../../workflow-automation/.github/workflows/services/BackendChecks.js');
     expect(fs.existsSync(backendPath)).toBe(true);
 
     // 6. Check that Page Objects template exists
@@ -62,13 +62,21 @@ test('Verify Project Structure', async () => {
     const requiredDirs = [
         './utils',
         './tests',
-        './utils/pageObjects',
-        './.github/workflows',
-        './.github/workflows/services'
+        './utils/pageObjects'
+    ];
+
+    const workflowDirs = [
+        '../../workflow-automation/.github/workflows',
+        '../../workflow-automation/.github/workflows/services'
     ];
 
     for (const dir of requiredDirs) {
         const dirPath = path.join(__dirname, '../', dir);
+        expect(fs.existsSync(dirPath)).toBe(true);
+    }
+
+    for (const dir of workflowDirs) {
+        const dirPath = path.join(__dirname, dir);
         expect(fs.existsSync(dirPath)).toBe(true);
     }
 

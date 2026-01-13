@@ -11,7 +11,6 @@
     "test:chromium": "playwright test --project=chromium",
     "test:firefox": "playwright test --project=firefox",
     "test:webkit": "playwright test --project=webkit",
-    "test:health": "playwright test tests/full-stack-health.spec.js",
     "report": "playwright show-report"
   },
   "keywords": [
