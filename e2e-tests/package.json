@@ -1,0 +1,31 @@
+{
+  "name": "@automation/e2e-tests",
+  "version": "1.0.0",
+  "description": "End-to-End Testing Suite using Playwright",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "test:debug": "playwright test --debug",
+    "test:ui": "playwright test --ui",
+    "test:headed": "HEADED=true playwright test",
+    "test:chromium": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:webkit": "playwright test --project=webkit",
+    "test:health": "playwright test tests/full-stack-health.spec.js",
+    "report": "playwright show-report"
+  },
+  "keywords": [
+    "playwright",
+    "e2e",
+    "testing",
+    "automation"
+  ],
+  "author": "Automation Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.45.0"
+  },
+  "dependencies": {
+    "nodemailer": "^7.0.12"
+  }
+}
