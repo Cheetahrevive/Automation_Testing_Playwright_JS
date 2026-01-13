@@ -31,29 +31,38 @@ test('Morning System Health Audit', async ({ page }, testInfo) => {
             failures.push('❌ Database connection issue detected');
         }
 
-        // If any failures were detected, send alert
+        // If any failures were detected, send alert only on final retry
         if (failures.length > 0) {
             const screenshotPath = testInfo.outputPath('failure.png');
             await page.screenshot({ path: screenshotPath });
 
-            await sendAlert(
-                'Application Critical Failure',
-                `Health check failed at ${new Date().toISOString()}\n\nIssues:\n${failures.join('\n')}`,
-                screenshotPath
-            );
+            // Only send email on final retry to avoid duplicate alerts
+            // testInfo.retry is 0-indexed, retries is the max number of retries
+            if (testInfo.retry === testInfo.project.retries) {
+                await sendAlert(
+                    'CRITICAL: Application Health Check Failed',
+                    `Health check failed after ${testInfo.retry + 1} attempt(s) at ${new Date().toISOString()}\n\nIssues:\n${failures.join('\n')}`,
+                    screenshotPath
+                );
+            }
+            
             throw new Error('Health check failed: ' + failures.length + ' issue(s) detected.');
         }
 
     } catch (error) {
-        // If an unexpected error occurs, capture it and send alert
+        // If an unexpected error occurs, capture it and send alert only on final retry
         const screenshotPath = testInfo.outputPath('error.png');
         await page.screenshot({ path: screenshotPath });
 
-        await sendAlert(
-            'Application Health Check Error',
-            `Unexpected error during health check:\n${error.message}`,
-            screenshotPath
-        );
+        // Only send email on final retry to avoid duplicate alerts
+        if (testInfo.retry === testInfo.project.retries) {
+            await sendAlert(
+                'CRITICAL: Application Health Check Error',
+                `Unexpected error during health check after ${testInfo.retry + 1} attempt(s):\n${error.message}`,
+                screenshotPath
+            );
+        }
+        
         throw error;
     }
 });
