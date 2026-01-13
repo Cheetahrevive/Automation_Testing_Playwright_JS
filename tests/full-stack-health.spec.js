@@ -6,29 +6,29 @@ test('Morning System Health Audit', async ({ page }, testInfo) => {
     let failures = [];
 
     try {
-        // Navigate to your application
-        await page.goto('https://your-app.com');
+        // Navigate to your application (using Playwright docs as sample test site)
+        await page.goto('https://playwright.dev/');
 
         // Example health checks - customize based on your app
         // 1. Check if page loads
-        await expect(page).toHaveTitle(/Your App Title/);
+        await expect(page).toHaveTitle(/Playwright/);
 
         // 2. Check if critical elements are visible
-        const loginButton = page.getByRole('button', { name: 'Login' });
-        if (!await loginButton.isVisible()) {
-            failures.push('❌ Login button is not visible');
+        const getStartedLink = page.getByRole('link', { name: 'Get started' });
+        if (!await getStartedLink.isVisible()) {
+            failures.push('❌ Get started link is not visible');
         }
 
         // 3. Check API health endpoint
-        const response = await page.request.get('https://your-api.com/health');
+        const response = await page.request.get('https://playwright.dev/');
         if (response.status() !== 200) {
-            failures.push(`❌ API health check failed with status ${response.status()}`);
+            failures.push(`❌ Website health check failed with status ${response.status()}`);
         }
 
-        // 4. Check database connectivity (if exposed via UI)
-        const dbStatus = page.getByText('Database: Connected');
-        if (!await dbStatus.isVisible()) {
-            failures.push('❌ Database connection issue detected');
+        // 4. Check if main heading is visible
+        const mainHeading = page.getByRole('heading', { level: 1 });
+        if (!await mainHeading.isVisible()) {
+            failures.push('❌ Main heading is not visible');
         }
 
         // If any failures were detected, send alert only on final retry
@@ -45,7 +45,7 @@ test('Morning System Health Audit', async ({ page }, testInfo) => {
                     screenshotPath
                 );
             }
-            
+
             throw new Error('Health check failed: ' + failures.length + ' issue(s) detected.');
         }
 
@@ -62,7 +62,7 @@ test('Morning System Health Audit', async ({ page }, testInfo) => {
                 screenshotPath
             );
         }
-        
+
         throw error;
     }
 });
