@@ -10,5 +10,9 @@
   "devDependencies": {
     "@playwright/test": "^1.57.0",
     "@types/node": "^20.19.27"
+  },
+  "dependencies": {
+    "nodemailer": "^7.0.12",
+    "pg": "^8.16.3"
   }
 }

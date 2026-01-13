@@ -22,14 +22,21 @@ module.exports = defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: [['html', { open: 'never' }]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://127.0.0.1:3000',
 
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    /* If 'HEADED' env var is true, run with browser visible */
+    headless: process.env.HEADED !== 'true',
+    viewport: { width: 1280, height: 720 },
+    /* Capture screenshot only on failure */
+    screenshot: 'only-on-failure',
+    /* Trace is also helpful for deep debugging */
+    trace: 'retain-on-failure',
+    /* Record video on failure for debugging */
+    video: 'retain-on-failure',
   },
 
   /* Configure projects for major browsers */
