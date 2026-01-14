@@ -1,5 +1,13 @@
 # PlayWright Automation - Project Root
 
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Node](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg)
+![Playwright](https://img.shields.io/badge/playwright-v1.45.0-brightgreen.svg)
+![Tests](https://img.shields.io/badge/tests-18%20passing-success.svg)
+![Projects](https://img.shields.io/badge/projects-2%20segregated-blue.svg)
+![Status](https://img.shields.io/badge/status-production%20ready-success.svg)
+
+
 This is the root workspace containing two independent, segregated projects:
 
 ## 📁 Project Structure
