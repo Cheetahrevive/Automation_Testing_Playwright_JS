@@ -37,10 +37,10 @@ test.describe('Basic Navigation and Assertion Tests', () => {
     
     // Test on different viewport sizes
     await page.setViewportSize({ width: 1920, height: 1080 });
-    await expect(page.getByRole('heading')).toBeVisible();
+    await expect(page.getByRole('heading').first()).toBeVisible();
     
     await page.setViewportSize({ width: 375, height: 667 });
-    await expect(page.getByRole('heading')).toBeVisible();
+    await expect(page.getByRole('heading').first()).toBeVisible();
   });
 
   test('search functionality exists', async ({ page }) => {

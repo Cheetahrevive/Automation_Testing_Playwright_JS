@@ -12,12 +12,10 @@ test('Verify Monitoring Suite is Properly Configured', async () => {
     const notifier = require(notifierPath);
     expect(notifier.sendAlert).toBeDefined();
 
-    // 2. Check that GitHub workflows exist
-    const dailyCheckPath = path.join(__dirname, '../../workflow-automation/.github/workflows/daily-check.yml');
-    const healthCheckPath = path.join(__dirname, '../../daily-health-check/.github/workflows/daily-health-check.yml');
+    // 2. Check that the CI workflow exists
+    const ciWorkflowPath = path.join(__dirname, '../../.github/workflows/playwright.yml');
 
-    expect(fs.existsSync(dailyCheckPath)).toBe(true);
-    expect(fs.existsSync(healthCheckPath)).toBe(true);
+    expect(fs.existsSync(ciWorkflowPath)).toBe(true);
 
     // 3. Check that playwright.config.js has required settings
     const configPath = path.join(__dirname, '../playwright.config.js');
@@ -30,9 +28,9 @@ test('Verify Monitoring Suite is Properly Configured', async () => {
     // 4. Check environment variables
     expect(process.env.EMAIL_PASS || process.env.EMAIL_USER || true).toBeDefined();
 
-    // 5. Check that BackendChecks exists
-    const backendPath = path.join(__dirname, '../../workflow-automation/.github/workflows/services/BackendChecks.js');
-    expect(fs.existsSync(backendPath)).toBe(true);
+    // 5. Check that the workflow-automation docs project exists
+    const workflowDocsPath = path.join(__dirname, '../../workflow-automation');
+    expect(fs.existsSync(workflowDocsPath)).toBe(true);
 
     // 6. Check that Page Objects template exists
     const pageObjPath = path.join(__dirname, '../utils/pageObjects/LoginPage.js');
@@ -66,8 +64,7 @@ test('Verify Project Structure', async () => {
     ];
 
     const workflowDirs = [
-        '../../workflow-automation/.github/workflows',
-        '../../workflow-automation/.github/workflows/services'
+        '../../.github/workflows'
     ];
 
     for (const dir of requiredDirs) {

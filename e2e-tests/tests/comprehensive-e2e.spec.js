@@ -46,9 +46,9 @@ test.describe('Complete User Journey Tests', () => {
     await newTodo.fill('Original task');
     await newTodo.press('Enter');
     
-    // Edit item
-    await page.getByTestId('todo-item').dblclick();
-    const editInput = page.getByTestId('text-input');
+    // Edit item (double-click the title label, then edit via the Edit input)
+    await page.getByTestId('todo-title').dblclick();
+    const editInput = page.getByLabel('Edit');
     await editInput.fill('Updated task');
     await editInput.press('Enter');
     
